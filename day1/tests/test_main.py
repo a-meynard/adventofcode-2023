@@ -19,3 +19,11 @@ def test_usecase_with_more_than_two_number_on_the_line():
 
 def test_usecase_add_multiple_line_number():
     assert Usecase().handle(["pqr3stu8vwx", "1abc2"]) == 50
+
+
+def test_usecase_with_written_number():
+    assert Usecase().handle(["two1nine"]) == 29
+
+
+def test_usecase_with_written_number_and_real_number():
+    assert Usecase().handle(["two1nine8"]) == 28
