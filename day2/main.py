@@ -1,9 +1,27 @@
+from infra.game_provider.ingest_game import IngestGameGameProvider
+
+from find_possible_games import FindPossibleGames
+from game_configuration import GameConfiguration
+from color import Color
+
+
 class Usecase:
     def __init__(self) -> None:
         pass
 
     def handle(self, puzzle_input: str):
-        pass
+        possible_games = FindPossibleGames(
+            game_provider=IngestGameGameProvider(game_lines=puzzle_input)
+        ).handle(
+            real_game_configuration=GameConfiguration(
+                cubes_amount_by_color={
+                    Color("red"): 12,
+                    Color("green"): 13,
+                    Color("blue"): 14,
+                }
+            )
+        )
+        return sum([game.id for game in possible_games])
 
 
 def read_input() -> list[str]:
