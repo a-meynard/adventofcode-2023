@@ -13,7 +13,7 @@ class FindPossibleGames:
         for color, amount in set.cubes_amount_by_color.items():
             if not (
                 color in configuration.cubes_amount_by_color.keys()
-                and amount < configuration.cubes_amount_by_color[color]
+                and amount <= configuration.cubes_amount_by_color[color]
             ):
                 return False
         return True

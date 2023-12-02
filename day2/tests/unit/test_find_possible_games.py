@@ -60,6 +60,31 @@ def test_find_possible_games_with_values_above_and_multiple_colors():
     ) == [possible_game]
 
 
+def test_find_possible_games_with_equals_values():
+    impossible_game = Game(
+        id=1,
+        revealed_sets=[
+            RevealedSet(cubes_amount_by_color={Color("red"): 16}),
+        ],
+    )
+    possible_game = Game(
+        id=2,
+        revealed_sets=[
+            RevealedSet(cubes_amount_by_color={Color("red"): 15}),
+        ],
+    )
+
+    game_provider = InMemoryGameProvider(games=[possible_game, impossible_game])
+    usecase = FindPossibleGames(game_provider=game_provider)
+    assert usecase.handle(
+        real_game_configuration=GameConfiguration(
+            cubes_amount_by_color={
+                Color("red"): 15,
+            }
+        )
+    ) == [possible_game]
+
+
 def test_find_possible_games_with_not_represented_color():
     impossible_game = Game(
         id=1,
