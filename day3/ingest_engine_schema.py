@@ -17,6 +17,7 @@ def is_a_number(char: str) -> bool:
 
 class IngestEngineSchema:
     VALID_SYMBOLS = [i for i in r'\/:*?"<>|#+$&@%=-']
+    GEAR_SYMBOL = "*"
 
     def __init__(self) -> None:
         pass
@@ -54,9 +55,16 @@ class IngestEngineSchema:
                     if current_potential_part_number is not None:
                         part_numbers.add(current_potential_part_number)
                         current_potential_part_number = None
-                    engine_parts.add(
-                        EnginePart(position=Position(start=x, end=x, line=y))
-                    )
+                    if char == IngestEngineSchema.GEAR_SYMBOL:
+                        engine_parts.add(
+                            EnginePart(
+                                position=Position(start=x, end=x, line=y), is_gear=True
+                            )
+                        )
+                    else:
+                        engine_parts.add(
+                            EnginePart(position=Position(start=x, end=x, line=y))
+                        )
                 else:
                     raise ValueError(f"Found an unknown character, got: '{char}'")
             if current_potential_part_number is not None:

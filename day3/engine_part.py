@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from position import Position
 
@@ -9,6 +9,7 @@ class EnginePart:
     # because python already has a library called 'symbol' that we don't want
     # to override.
     position: Position
+    is_gear: bool = field(compare=False, default=True)
 
     def __post_init__(self):
         if self.position.start != self.position.end:
