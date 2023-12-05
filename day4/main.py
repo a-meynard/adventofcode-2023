@@ -1,11 +1,18 @@
+from ingest_scratchcards import IngestScratchCards
+
+
 class Usecase:
     def __init__(self) -> None:
         pass
 
-    def solve_first_problem(self, puzzle_input: str):
-        pass
+    def solve_first_problem(self, puzzle_input: list[str]) -> int:
+        sanitized_puzzle_input = [line.replace("\n", "") for line in puzzle_input]
+        scratchcards = IngestScratchCards().handle(
+            raw_scratchcards=sanitized_puzzle_input
+        )
+        return sum([s.calculate_value() for s in scratchcards])
 
-    def solve_second_problem(self, puzzle_input: str):
+    def solve_second_problem(self, puzzle_input: list[str]):
         pass
 
 
