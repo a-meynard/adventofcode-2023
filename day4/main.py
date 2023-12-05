@@ -1,4 +1,5 @@
 from ingest_scratchcards import IngestScratchCards
+from expand_scratchcards import ExpandScratchCards
 
 
 class Usecase:
@@ -13,7 +14,11 @@ class Usecase:
         return sum([s.calculate_value() for s in scratchcards])
 
     def solve_second_problem(self, puzzle_input: list[str]):
-        pass
+        sanitized_puzzle_input = [line.replace("\n", "") for line in puzzle_input]
+        scratchcards = IngestScratchCards().handle(
+            raw_scratchcards=sanitized_puzzle_input
+        )
+        return len(ExpandScratchCards().handle(scratchcards))
 
 
 def read_input() -> list[str]:
