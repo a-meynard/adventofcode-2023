@@ -2,10 +2,10 @@ class Usecase:
     def __init__(self) -> None:
         pass
 
-    def solve_first_problem(self, puzzle_input: str):
+    def solve_first_problem(self, puzzle_input: list[str]):
         pass
 
-    def solve_second_problem(self, puzzle_input: str):
+    def solve_second_problem(self, puzzle_input: list[str]):
         pass
 
 
