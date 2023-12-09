@@ -20,7 +20,7 @@ class IngestAlmanac:
     def ingest_categories(almanac: Almanac, input: list[str]):
         for line in input:
             if line == "":
-                break
+                continue
 
             m = re.search(r"(\w+)-to-(\w+) map:", line)
             if m is not None:
