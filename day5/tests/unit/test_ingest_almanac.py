@@ -13,6 +13,7 @@ class Category:
 class IngestAlmanac:
     def __init__(self) -> None:
         self.categories: list[Category] = []
+        self.initial_seeds: list[int] = []
 
     def source_destination_couple(self, source_start, destination_start, length):
         return zip(
@@ -45,7 +46,13 @@ class IngestAlmanac:
                         )
                     )
 
+    def ingest_initial_seeds(self, input: list[str]):
+        all_numbers = re.search(r"^seeds: ((\d ?)+)", input)
+        for seed in all_numbers.group(1).split(" "):
+            self.initial_seeds.append(int(seed))
+
     def ingest(self, input: list[str]):
+        self.ingest_initial_seeds(input=input[0])
         self.ingest_categories(input=input[2:])
 
 
@@ -67,3 +74,16 @@ def test_ingest_almanac_show_correct_categories():
         Category(name="seed", number=52, destination_numer=54),
         Category(name="seed", number=53, destination_numer=55),
     ]
+
+
+def test_ingest_almanac_show_correct_initial_seeds():
+    input = [
+        "seeds: 79 14 55 13",
+        "",
+        "seed-to-soil map:",
+        "50 98 2",
+        "52 50 4",
+    ]
+    usecase = IngestAlmanac()
+    usecase.ingest(input=input)
+    assert usecase.initial_seeds == [79, 14, 55, 13]
