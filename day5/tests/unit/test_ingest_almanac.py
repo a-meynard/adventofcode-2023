@@ -11,8 +11,8 @@ def test_ingest_almanac_show_correct_categories():
         "52 50 4",
     ]
     usecase = IngestAlmanac()
-    usecase.ingest(input=input)
-    assert usecase.categories == [
+    almanac = usecase.ingest(input=input)
+    assert almanac.categories == [
         Category(name="seed", number=98, destination_numer=50),
         Category(name="seed", number=99, destination_numer=51),
         Category(name="seed", number=50, destination_numer=52),
@@ -31,5 +31,5 @@ def test_ingest_almanac_show_correct_initial_seeds():
         "52 50 4",
     ]
     usecase = IngestAlmanac()
-    usecase.ingest(input=input)
-    assert usecase.initial_seeds == [79, 14, 55, 13]
+    almanac = usecase.ingest(input=input)
+    assert almanac.initial_seeds == [79, 14, 55, 13]
