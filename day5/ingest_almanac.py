@@ -1,7 +1,8 @@
 import re
 
-from category import Category
+from category import Category, CategoryV2
 from almanac import Almanac
+from feature_router import FeatureRouter
 
 
 class IngestAlmanac:
@@ -30,16 +31,26 @@ class IngestAlmanac:
                 destination_start = int(m.group(1))
                 source_start = int(m.group(2))
                 range_length = int(m.group(3))
-                for source, destination in IngestAlmanac.source_destination_couple(
-                    source_start, destination_start, range_length
-                ):
+                if FeatureRouter.ENABLE_CATEGORY_V2:
                     almanac.categories.append(
-                        Category(
+                        CategoryV2(
                             name=current_source_category,
-                            number=source,
-                            destination_numer=destination,
+                            source_start=source_start,
+                            destination_start=destination_start,
+                            range_length=range_length,
                         )
                     )
+                else:
+                    for source, destination in IngestAlmanac.source_destination_couple(
+                        source_start, destination_start, range_length
+                    ):
+                        almanac.categories.append(
+                            Category(
+                                name=current_source_category,
+                                number=source,
+                                destination_numer=destination,
+                            )
+                        )
 
     @staticmethod
     def ingest_initial_seeds(almanac: Almanac, input: list[str]):
