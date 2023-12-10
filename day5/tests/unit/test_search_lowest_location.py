@@ -1,6 +1,7 @@
 from almanac import Almanac
 from category import Category, CategoryV2
 from feature_router import FeatureRouter
+from range_seed import RangeSeed
 
 from search_lowest_location import SearchLowestLocation
 
@@ -110,3 +111,23 @@ def test_search_lowest_location_with_multiple_seed_and_multiple_category_types()
         ],
     )
     assert SearchLowestLocation().handle(almanac=almanac) == 14
+
+
+def test_search_lowest_location_with_multiple_seed_and_multiple_category_types():
+    FeatureRouter.ENABLE_RANGE_SEED = True
+    almanac = Almanac(
+        initial_seeds=[RangeSeed(79, 80), RangeSeed(44, 46)],
+        categories=[
+            *build_categories_from_range(
+                name="seed", numbers=Range(79, 79), destinations=Range(12, 12)
+            ),
+            *build_categories_from_range(
+                name="seed", numbers=Range(44, 46), destinations=Range(70, 72)
+            ),
+            *build_categories_from_range(
+                name="soil", numbers=Range(12, 12), destinations=Range(16, 16)
+            ),
+        ],
+    )
+    assert SearchLowestLocation().handle(almanac=almanac) == 16
+    FeatureRouter.ENABLE_RANGE_SEED = False

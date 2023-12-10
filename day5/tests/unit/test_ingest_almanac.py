@@ -1,5 +1,6 @@
 from category import Category, CategoryV2
 from ingest_almanac import IngestAlmanac
+from range_seed import RangeSeed
 
 from feature_router import FeatureRouter
 
@@ -76,3 +77,18 @@ def test_ingest_almanac_show_correct_initial_seeds():
     usecase = IngestAlmanac()
     almanac = usecase.ingest(input=input)
     assert almanac.initial_seeds == [79, 14, 55, 13]
+
+
+def test_ingest_almanac_show_correct_initial_seeds_with_ranges_of_seeds():
+    FeatureRouter.ENABLE_RANGE_SEED = True
+    input = [
+        "seeds: 79 2 55 3",
+        "",
+        "seed-to-soil map:",
+        "50 98 2",
+        "52 50 4",
+    ]
+    usecase = IngestAlmanac()
+    almanac = usecase.ingest(input=input)
+    assert almanac.initial_seeds == [RangeSeed(79, 81), RangeSeed(55, 58)]
+    FeatureRouter.ENABLE_RANGE_SEED = False

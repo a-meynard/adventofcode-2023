@@ -26,3 +26,13 @@ class CategoryV2:
             return self.destination_start + (number - self.source_start)
         else:
             return number
+
+    def get_to_source(self, number: int) -> int:
+        if (
+            self.destination_start
+            <= number
+            < self.destination_start + self.range_length
+        ):
+            return self.source_start + (number - self.destination_start)
+        else:
+            return number
